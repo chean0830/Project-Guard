@@ -1,0 +1,45 @@
+# === 공통 / 민감 정보 ===
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+application-secret*.yml
+application-secret*.properties
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Backend (Spring / Gradle / Maven) ===
+backend/build/
+backend/.gradle/
+backend/out/
+backend/target/
+backend/HELP.md
+!backend/gradle/wrapper/gradle-wrapper.jar
+
+# === Frontend Web (Next.js) ===
+frontend-web/node_modules/
+frontend-web/.next/
+frontend-web/out/
+frontend-web/.env*.local
+
+# === Frontend App (Flutter) ===
+frontend-app/.dart_tool/
+frontend-app/.flutter-plugin-dependencies
+frontend-app/build/
+frontend-app/**/ios/Pods/
+frontend-app/**/android/.gradle/
+
+# === 업로드/분석 임시 파일 (등기부등본 원본은 저장 금지 원칙) ===
+uploads/
+tmp/
+*.tmp.pdf
