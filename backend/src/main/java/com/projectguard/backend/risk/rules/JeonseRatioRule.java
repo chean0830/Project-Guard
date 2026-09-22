@@ -1,0 +1,53 @@
+package com.projectguard.backend.risk.rules;
+
+import com.projectguard.backend.risk.RiskAssessmentInput;
+import com.projectguard.backend.risk.RiskRule;
+import com.projectguard.backend.risk.RiskSeverity;
+import com.projectguard.backend.risk.RiskSignal;
+import com.projectguard.backend.risk.RiskSource;
+import com.projectguard.backend.risk.RiskThresholds;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+
+/**
+ * 전세가율(보증금/시세)이 높을수록 집값이 떨어지면 보증금을 못 돌려받을 위험(깡통전세)이 커진다.
+ * HUG 전세보증금 반환보증 심사에서 쓰이는 기준을 참고한 권고 지표이며, 법적 기준은 아니다.
+ * 시세(marketPrice)가 아직 조회되지 않았으면 평가하지 않는다.
+ */
+@Component
+public class JeonseRatioRule implements RiskRule {
+
+    @Override
+    public Optional<RiskSignal> evaluate(RiskAssessmentInput input) {
+        Long marketPrice = input.marketPrice();
+        if (marketPrice == null || marketPrice <= 0) {
+            return Optional.empty();
+        }
+
+        double ratio = (double) input.depositAmount() / marketPrice;
+
+        RiskSeverity severity;
+        if (ratio >= RiskThresholds.JEONSE_RATIO_HIGH) {
+            severity = RiskSeverity.HIGH;
+        } else if (ratio >= RiskThresholds.JEONSE_RATIO_CAUTION) {
+            severity = RiskSeverity.CAUTION;
+        } else {
+            return Optional.empty();
+        }
+
+        String detail = String.format(
+                "보증금이 시세의 %.1f%% 수준입니다. 전세가율이 높을수록 집값이 떨어졌을 때 "
+                        + "보증금을 전액 돌려받지 못할 위험이 커집니다.",
+                ratio * 100);
+
+        return Optional.of(new RiskSignal(
+                "HIGH_JEONSE_RATIO",
+                "전세가율이 높음",
+                severity,
+                RiskSource.GOVERNMENT_GUIDELINE,
+                "HUG 전세보증금 반환보증 심사 기준 참고 (법적 기준 아님, 참고 지표)",
+                detail
+        ));
+    }
+}
