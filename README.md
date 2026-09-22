@@ -9,10 +9,10 @@
 
 | 영역 | 기술 | 상태 |
 |---|---|---|
-| 백엔드 | Spring (Java) | 시작 전 |
-| 웹 프론트 | Next.js | 시작 전 |
+| 백엔드 | Spring (Java) | 뼈대 생성 완료 |
+| 웹 프론트 | Next.js | 뼈대 생성 완료 |
 | 앱 프론트 | Flutter | 최후순위 (보류) |
-| OCR | Google Cloud Vision API | 시작 전 |
+| OCR | Google Cloud Vision API | 키 발급 완료 |
 
 ## 폴더 구조
 
@@ -23,14 +23,19 @@ frontend-app/   Flutter 앱 (개발 순서상 마지막)
 docs/           기획서, 결정사항, 기타 문서
 ```
 
+## 대상 부동산 유형
+
+아파트, 오피스텔, 빌라(연립·다세대) 지원. 원룸/다가구주택은 범위 밖 (사유: [docs/결정사항.md](docs/결정사항.md) 7번 참고)
+
 ## 현재 진행 상태
 
 - [x] Git 개발 환경 구축
-- [ ] 공공데이터포털 API 신청 (실거래가, 건축물대장, 도로명주소)
-- [ ] Google Cloud Vision API 활성화
+- [x] 공공데이터포털 API 신청 (아파트 실거래가, 건축물대장, 도로명주소)
+- [x] Google Cloud Vision API 발급
+- [x] Spring 서버 뼈대 생성
+- [x] Next.js 웹 뼈대 생성
+- [ ] 오피스텔·연립다세대 실거래가 API 추가 신청
 - [ ] 등기부등본 샘플 확보 및 텍스트 추출 테스트
-- [ ] Spring 서버 뼈대 생성
-- [ ] Next.js 웹 뼈대 생성
 
 ## 보안/개인정보 원칙
 
