@@ -8,6 +8,9 @@
 *.jks
 application-secret*.yml
 application-secret*.properties
+backend/credentials/
+*-credentials.json
+*-key.json
 
 # === IDE ===
 .idea/
